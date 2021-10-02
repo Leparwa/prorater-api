@@ -29,9 +29,12 @@ DEBUG = False
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:8000", 
     
-    "https://prorate-app.herokuapp.com",
+    
 ]
 
+ALLOWED_HOSTS=[
+"https://prorate-app.herokuapp.com",
+]
 CORS_ALLOW_CREDENTIALS = True
 
 
