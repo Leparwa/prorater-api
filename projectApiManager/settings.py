@@ -24,12 +24,12 @@ from datetime import timedelta
 SECRET_KEY = 'django-insecure-%&d((cmt%2&w6#4$3p&r&(&l=8%7e*9-d$x%fh#gf^(xm9yhry'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:8000", 
     
-    "prorate-app.herokuapp.com",
+    "https://prorate-app.herokuapp.com",
 ]
 
 CORS_ALLOW_CREDENTIALS = True
