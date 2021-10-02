@@ -12,6 +12,6 @@ class Project(models.Model):
     title = models.CharField(max_length=100)
     description = models.CharField(max_length=100)
     link = models.CharField(max_length=100)
-    reviews = models.ForeignKey(Review, models.SET_NULL, blank=True, null=True)
+    review = models.ForeignKey(Review, models.SET_NULL, blank=True, null=True)
     def __str__(self):
         return '%d: %s' % (self.description, self.title)

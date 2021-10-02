@@ -70,33 +70,32 @@ class RegistrationSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         return CustomUser.objects.create_user(**validated_data)
         
-class LoginSerializer(serializers.ModelSerializer):
-    password = serializers.CharField(max_length=128, min_length=3, write_only=True)
-    email = serializers.EmailField(max_length=128)
-    username = serializers.CharField(max_length=128, read_only=True)
-    token = serializers.CharField(read_only=True)
-    class Meta:
-        model = CustomUser
-        fields = ['email', 'password','token', 'username']
-    def validate(self, attrs):
-        email =attrs.get('email', '')
-        password = attrs.get('password', '')
-        user = auth.authenticate(email=email, password=password)
-        print(user)
-        if email is None:
-            raise serializers.ValidationError('An email address is required to log in.')
-        if password is None:
-            raise serializers.ValidationError('A password is required to log in.')
-        if not user:
-            raise AuthenticationFailed('Invalid login credentials')
-        if not user.is_email_verified:
-            raise AuthenticationFailed('Account not activated, please verify your email to activate your account')
+# class LoginSerializer(serializers.ModelSerializer):
+#     password = serializers.CharField(max_length=128, min_length=3, write_only=True)
+#     email = serializers.EmailField(max_length=128)
+#     username = serializers.CharField(max_length=128, read_only=True)
+#     token = serializers.CharField(read_only=True)
+#     class Meta:
+#         model = CustomUser
+#         fields = ['email', 'password','token', 'username']
+#     def validate(self, attrs):
+#         email =attrs.get('email', '')
+#         password = attrs.get('password', '')
+#         user = auth.authenticate(email=email, password=password)
+#         if email is None:
+#             raise serializers.ValidationError('An email address is required to log in.')
+#         if password is None:
+#             raise serializers.ValidationError('A password is required to log in.')
+#         if not user:
+#             raise AuthenticationFailed('Invalid login credentials')
+#         if not user.is_email_verified:
+#             raise AuthenticationFailed('Account not activated, please verify your email to activate your account')
 
-        return {
-            'email': user.email,
-            'username':user.username,
-            'token':user.token
-            }
-        return super().validate(attrs)
+#         return {
+#             'email': user.email,
+#             'username':user.username,
+#             'token':user.token
+#             }
+#         return super().validate(attrs)
         
 

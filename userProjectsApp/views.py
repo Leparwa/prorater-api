@@ -9,20 +9,16 @@ from rest_framework import permissions
 
 class ProjectListView(generics.ListCreateAPIView):
     serializer_class = ProjectSerializer
-    permission_classes = (permissions.IsAuthenticated,)
-
-
+    permission_classes = (permissions.AllowAny,)
     def perform_create(self, serializer):
-        serializer.save(owner = self.request.user)
-    
+        serializer.save()
+        # serializer.save(owner = self.request.user)
     def get_queryset(self):
-        return Project.objects.filter(owner =self.request.user)
- 
-
+        return Project.objects.all()
+        # return Project.objects.filter(owner =self.request.user)
 class ProjeDetailsView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = ProjectSerializer
     permission_classes = (permissions.IsAuthenticated,)
     lookup_field ='id'
-
     def get_queryset(self):
         return Project.objects.filter(id=self.request.user.profile)

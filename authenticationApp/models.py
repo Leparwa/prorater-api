@@ -55,6 +55,8 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
         return self._generate_jwt_token()
     EMAIL_FIELD ='email'
     USERNAME_FIELD = 'email'
+    def __str__(self):
+        return self.email
 
     def is_staff(self):
         return self.is_admin
@@ -88,10 +90,6 @@ class Profile(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     photo = models.ImageField(upload_to=profile_upload)
     bio = models.CharField(max_length=100)
-
-    
-
-
 def create_profile(sender, instance, created, **kwargs):
     if created:
         Profile.objects.create(user=instance)

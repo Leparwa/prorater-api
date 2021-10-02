@@ -15,6 +15,7 @@ import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 import django_heroku
+from datetime import timedelta
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
@@ -25,9 +26,11 @@ SECRET_KEY = 'django-insecure-%&d((cmt%2&w6#4$3p&r&(&l=8%7e*9-d$x%fh#gf^(xm9yhry
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [
-
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:8000",
 ]
+
+CORS_ALLOW_CREDENTIALS = True
 
 
 # Application definition
@@ -42,11 +45,13 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'userProjectsApp',
     'authenticationApp',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -105,10 +110,8 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        'authenticationApp.backends.JWTAuthentication',
+        'authenticationApp.backends.CustomAuthentication',
       ),
-    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
-    'PAGE_SIZE': 10
 }
 
 # Internationalization
@@ -132,6 +135,43 @@ STATIC_URL = '/static/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
+
+
+SIMPLE_JWT = {
+  'ACCESS_TOKEN_LIFETIME': timedelta(days=12),
+  'REFRESH_TOKEN_LIFETIME': timedelta(days=12),
+  'ROTATE_REFRESH_TOKENS': False,
+  'BLACKLIST_AFTER_ROTATION': True,
+  'UPDATE_LAST_LOGIN': False,
+
+  'ALGORITHM': 'HS256',
+  'SIGNING_KEY': SECRET_KEY,
+  'VERIFYING_KEY': None,
+  'AUDIENCE': None,
+  'ISSUER': None,
+
+  'AUTH_HEADER_TYPES': ('Bearer',),
+  'AUTH_HEADER_NAME': 'HTTP_AUTHORIZATION',
+  'USER_ID_FIELD': 'id',
+  'USER_ID_CLAIM': 'user_id',
+  'USER_AUTHENTICATION_RULE': 'rest_framework_simplejwt.authentication.default_user_authentication_rule',
+
+  'AUTH_TOKEN_CLASSES': ('rest_framework_simplejwt.tokens.AccessToken',),
+  'TOKEN_TYPE_CLAIM': 'token_type',
+
+  'JTI_CLAIM': 'jti',
+
+  'SLIDING_TOKEN_REFRESH_EXP_CLAIM': 'refresh_exp',
+  'SLIDING_TOKEN_LIFETIME': timedelta(days=23),
+  'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=1),
+
+  'AUTH_COOKIE': 'access_token', 
+  'AUTH_COOKIE_DOMAIN': None,     
+  'AUTH_COOKIE_SECURE': False,    
+  'AUTH_COOKIE_HTTP_ONLY' : True, 
+  'AUTH_COOKIE_PATH': '/',       
+  'AUTH_COOKIE_SAMESITE': 'Lax', 
+}
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
