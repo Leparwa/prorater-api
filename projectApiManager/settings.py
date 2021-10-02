@@ -27,7 +27,8 @@ SECRET_KEY = 'django-insecure-%&d((cmt%2&w6#4$3p&r&(&l=8%7e*9-d$x%fh#gf^(xm9yhry
 DEBUG = True
 
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:8000",
+    "http://localhost:8000", 
+    
     "prorate-app.herokuapp.com",
 ]
 
