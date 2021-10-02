@@ -24,7 +24,7 @@ from datetime import timedelta
 SECRET_KEY = 'django-insecure-%&d((cmt%2&w6#4$3p&r&(&l=8%7e*9-d$x%fh#gf^(xm9yhry'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 CORS_ALLOWED_ORIGINS = [
     "https://prorate-app.herokuapp.com",
