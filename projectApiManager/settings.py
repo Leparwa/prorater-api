@@ -28,6 +28,7 @@ DEBUG = True
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:8000",
+    "prorate-app.herokuapp.com",
 ]
 
 CORS_ALLOW_CREDENTIALS = True
